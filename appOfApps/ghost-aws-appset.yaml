@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ghost-aws-appset
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: eu-central-1
+        region: eu-central-1
+        env: dev
+        namespace: wesleycharlesblake
+        baseDomain: demo.stratotechnology.com
+
+  template:
+    metadata:
+      name: 'ghost-{{cluster}}-{{env}}'
+      labels:
+        env: '{{env}}'
+      annotations:
+    spec:
+      project: default
+      source:
+        repoURL: 'https://charts.bitnami.com/bitnami'
+        chart: ghost
+        targetRevision: '0.1.*'
+        helm:
+          values: |-
+            ingress:
+              enabled: true
+              ## @param ingress.hostname Default host for the ingress record
+              ##
+              hostname: {{namespace}}.{{baseDomain}}
+              
+              ## External Database config
+              ## mysql.enabled=false
+              ## externalDatabase.host=myexternalhost
+              ## externalDatabase.user=myuser
+              ## externalDatabase.password=mypassword
+              ## externalDatabase.database=mydatabase
+              ## externalDatabase.port=3306
+      destination:
+        namespace: '{{namespace}}'
+        name: '{{cluster}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      revisionHistoryLimit: 2
