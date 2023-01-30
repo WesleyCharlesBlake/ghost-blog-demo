@@ -1,7 +1,7 @@
 #---------------------------------------------------------------
 # EKS Blueprints
 #---------------------------------------------------------------
-module "eks-blueprints" {
+module "eks_blueprints" {
   source  = "app.terraform.io/stratotechnology/eks-blueprints/aws"
   version = "4.22.0"
 
