@@ -78,7 +78,8 @@ module "eks_blueprints_kubernetes_addons" {
 
   # Add-ons
   enable_argocd        = true
-  enable_argo_rollouts = false
+  enable_argo_rollouts = true
+  enable_argo_workflows = true
 
   enable_metrics_server     = true
   enable_cluster_autoscaler = true
