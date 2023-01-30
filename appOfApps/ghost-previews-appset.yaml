@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ghost-blog-pr
+spec:
+  generators:
+  - pullRequest:
+      github:
+        # The GitHub organization or user.
+        owner: WesleyCharlesBlake
+        # The Github repository
+        repo: ghost-blog-demo
+        # Reference to a Secret containing an access token. (optional)
+        tokenRef:
+          secretName: github-token
+          key: token
+        # (optional) use a GitHub App to access the API instead of a PAT.
+        appSecretName: github-app-repo-creds
+        # Labels is used to filter the PRs that you want to target. (optional)
+        labels:
+        - preview
+      requeueAfterSeconds: 1800
+  template:
+    metadata:
+      name: 'ghost-{{branch}}-{{number}}'
+      labels:
+        env: 'branch'
+      annotations:
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/WesleyCharlesBlake/ghost-blog-demo.git'
+        path: ghost
+        targetRevision: '{{head_sha}}'
+        helm:
+          values: |-
+            ingress:
+              enabled: true
+              ## @param ingress.hostname Default host for the ingress record
+              ##
+              hostname: {{head_short_sha}}.demo.stratotechnology.com
+
+      destination:
+        namespace: '{{head_short_sha}}'
+        name: '{{cluster}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      revisionHistoryLimit: 2
