@@ -42,7 +42,7 @@ spec:
 
       destination:
         namespace: '{{head_short_sha}}'
-        name: '{{cluster}}'
+        name: 'in-cluster'
       syncPolicy:
         automated:
           prune: true

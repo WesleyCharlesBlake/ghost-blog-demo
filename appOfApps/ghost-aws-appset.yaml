@@ -6,7 +6,7 @@ spec:
   generators:
   - list:
       elements:
-      - cluster: eu-central-1
+      - cluster: in-cluster
         region: eu-central-1
         env: dev
         namespace: wesleycharlesblake

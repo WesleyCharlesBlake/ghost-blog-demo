@@ -13,7 +13,7 @@ spec:
   source:
     path: appOfApps
     repoURL: https://github.com/WesleyCharlesBlake/ghost-blog-demo.git
-    targetRevision: master
+    targetRevision: main
   project: default
   syncPolicy:
     automated:
