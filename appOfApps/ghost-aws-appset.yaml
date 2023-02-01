@@ -6,7 +6,7 @@ spec:
   generators:
   - list:
       elements:
-      - cluster: in-cluster
+      - cluster: https://kubernetes.default.svc
         region: eu-central-1
         env: dev
         namespace: wesleycharlesblake
@@ -41,7 +41,7 @@ spec:
               ## externalDatabase.port=3306
       destination:
         namespace: '{{namespace}}'
-        name: '{{cluster}}'
+        server: '{{cluster}}'
       syncPolicy:
         automated:
           prune: true
