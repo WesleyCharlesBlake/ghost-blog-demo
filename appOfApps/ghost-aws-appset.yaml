@@ -11,6 +11,12 @@ spec:
         env: dev
         namespace: wesleycharlesblake
         baseDomain: demo.stratotechnology.com
+      - cluster: https://kubernetes.default.svc
+        region: eu-central-1
+        env: prod
+        namespace: production
+        baseDomain: demo.stratotechnology.com
+
 
   template:
     metadata:
