@@ -12,10 +12,10 @@ spec:
         repo: ghost-blog-demo
         # Reference to a Secret containing an access token. (optional)
         tokenRef:
-          secretName: github-token
+          secretName: github-pat
           key: token
         # (optional) use a GitHub App to access the API instead of a PAT.
-        appSecretName: github-app-repo-creds
+        # appSecretName: github-app-repo-creds
         # Labels is used to filter the PRs that you want to target. (optional)
         labels:
         - preview
@@ -24,7 +24,7 @@ spec:
     metadata:
       name: 'ghost-{{branch}}-{{number}}'
       labels:
-        env: 'branch'
+        env: 'preview'
       annotations:
     spec:
       project: default
