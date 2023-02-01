@@ -42,7 +42,7 @@ spec:
 
       destination:
         namespace: '{{head_short_sha}}'
-        name: 'in-cluster'
+        server: https://kubernetes.default.svc
       syncPolicy:
         automated:
           prune: true
